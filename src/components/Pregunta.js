@@ -2,7 +2,7 @@ import React, {Fragment,useState} from 'react';
 
 import AlertError from './AlertError'
 
-const Pregunta = ({guardarCantidad,guardarRestante}) => {
+const Pregunta = ({guardarCantidad,guardarRestante,actualizarPregunta}) => {
 
     // definir state
     const [monto, setMonto] = useState(0)
@@ -22,6 +22,7 @@ const Pregunta = ({guardarCantidad,guardarRestante}) => {
         // si se pasa la validación
         guardarCantidad(monto)
         guardarRestante(monto)
+        actualizarPregunta(false)
         return setError(false)
     }    
     return (  
