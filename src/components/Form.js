@@ -29,10 +29,13 @@ const Form = ({setGasto, setCrearGasto, restante}) => {
 
         setError(false)
         // Construir el gasto
+        let date = new Date()
         const gasto = {
             nombre, //esto lo tomoe del state
             cantidad, //esto lo tomoe del state
-            id: shortid.generate()
+            id: shortid.generate(),
+            date:`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`,
+            time:`${date.getHours()}:${date.getMinutes()}`
         }
         // pasar el gasto al componente
         setGasto(gasto)
