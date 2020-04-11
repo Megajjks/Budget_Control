@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 const Gasto = ({gasto}) => (
     <li className="gastos">
         <p>
@@ -8,4 +10,11 @@ const Gasto = ({gasto}) => (
     </li>
 )
  
+Gasto.propType = {
+    gasto: PropTypes.shape({
+        nombre:PropTypes.string.isRequired,
+        cantidad:PropTypes.number.isRequired
+    })
+}
+
 export default Gasto;
