@@ -1,22 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Pregunta from "./Pregunta";
 import Form from "./Form";
-import { render } from "@testing-library/react";
+import ListadoGastos from './ListadoGastos'
+import ControlPresupuesto from './ControlPresupuesto'
 
 const GenericHome = (props) => {
   const [cantidad, guardarCantidad] = useState(0);
   const [restante, guardarRestante] = useState(0);
   const [mostrarPregunta, actualizarPregunta] = useState(true);
   const [gastos, setGastos] = useState([]);
+  const [gasto, setGasto] = useState({});
+  const [crearGasto, setCrearGasto] = useState(false)
 
-    // Cuando agreguemos un nuevo gasto
-    const agregarNuevoGasto = gasto =>{
-        setGastos([
-            ...gastos,
-            gasto
-        ])
-    }
+    useEffect(() => {
+        if(crearGasto){
+            // Agregar el nuevo presupuesto
+            setGastos([
+                ...gastos,
+                gasto
+            ])
+            // resta del presupuesto actual
+            const presupuestoRestante = restante - gasto.cantidad
+            guardarRestante(presupuestoRestante)
+        }
+        // resetear al false
+        setCrearGasto(false)
+    }, [gasto, crearGasto, gastos, restante])
 
   return (
     <div className="container">
@@ -35,11 +45,18 @@ const GenericHome = (props) => {
                     <div className="row">
                         <div className="one-half column">
                             <Form 
-                                agregarNuevoGasto={agregarNuevoGasto}
+                                setGasto={setGasto}
+                                setCrearGasto={setCrearGasto}
                             />
                         </div>
                         <div className="one-half column">
-                            2 
+                            <ListadoGastos
+                                gastos={gastos}
+                            /> 
+                            <ControlPresupuesto
+                                cantidad={cantidad}
+                                restante={restante}
+                            />
                         </div>
                     </div>
                 )
