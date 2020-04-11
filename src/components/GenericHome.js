@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, {Fragment, useState, useEffect } from "react";
 
 import Pregunta from "./Pregunta";
 import Form from "./Form";
 import ListadoGastos from './ListadoGastos'
 import ControlPresupuesto from './ControlPresupuesto'
+
+import arrow from '../assets/svg/arrow_back.svg'
 
 const GenericHome = (props) => {
   const [cantidad, guardarCantidad] = useState(0);
@@ -28,6 +30,16 @@ const GenericHome = (props) => {
         setCrearGasto(false)
     }, [gasto, crearGasto, gastos, restante])
 
+    // regresar a la pregunta
+    const goBack = () =>{
+      // reinicio valores a default
+      actualizarPregunta(true)
+      guardarCantidad(0)
+      guardarRestante(0)
+      setGastos([])
+      return
+    }
+
   return (
     <div className="container">
       <header>
@@ -42,11 +54,14 @@ const GenericHome = (props) => {
                   />)
             : 
                 (
+                  <Fragment>
+                    <img onClick={goBack} src={arrow} style={{width:"1.5em", cursor:"pointer"}} />
                     <div className="row">
                         <div className="one-half column">
                             <Form 
                                 setGasto={setGasto}
                                 setCrearGasto={setCrearGasto}
+                                restante={restante}
                             />
                         </div>
                         <div className="one-half column">
@@ -59,6 +74,7 @@ const GenericHome = (props) => {
                             />
                         </div>
                     </div>
+                  </Fragment>
                 )
             }
           </div>

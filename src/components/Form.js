@@ -4,19 +4,29 @@ import PropTypes from 'prop-types';
 import AlertError from './AlertError'
 import shortid from 'shortid'
 
-const Form = ({setGasto, setCrearGasto}) => {
+const Form = ({setGasto, setCrearGasto, restante}) => {
     
     const [nombre, setNombre] = useState('')
     const [cantidad, setCantidad] = useState(0)
     const [error, setError] = useState(false)
+    const [msgError, setMsgError] = useState('')
     
     const agregarGasto = e =>{
         e.preventDefault();
 
-        // validar
+        // validar los datos introducidos
         if( cantidad < 1 || isNaN(cantidad) ||nombre.trim() ===''){
-            return setError(true)
+            setMsgError('Uno de los campos es incorrecto')
+            setError(true)
+            return
         }
+        // validar que haya capacidad
+        if(cantidad > restante){
+            setMsgError('Monto insuficiente, no se puede realizar el Gasto')
+            setError(true)
+            return
+        }
+
         setError(false)
         // Construir el gasto
         const gasto = {
@@ -38,7 +48,7 @@ const Form = ({setGasto, setCrearGasto}) => {
             onSubmit={agregarGasto}
         >
             <h2 style={{fontWeight:"400"}}>Agrega tus gastos aquí</h2>
-            {error? <AlertError msg="Uno de los campos es incorrecto"/> : null}
+            {error? <AlertError msg={msgError}/> : null}
             <div className="campo">
                 <label>Nombre de gasto</label>
                 <input
