@@ -10,3 +10,12 @@ export const revisarPresupuesto = (presupuesto, restante) =>{
     }
     return clase
 }
+
+export const gastoToGrapic = (gasto) =>{
+    let g ={
+        id:gasto.nombre,
+        label:gasto.nombre,
+        value:gasto.cantidad
+    }
+    return g
+}
