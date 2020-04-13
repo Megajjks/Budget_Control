@@ -84,7 +84,7 @@ const GenericHome = (props) => {
                         </div>
                         <div className="u-full-width column">
                             <h2 style={{fontWeight:"400", textAlign:"center"}}>Representación de tus gastos</h2>
-                            <GraphicPie data={dataGrapihc} className="algo"/>
+                            <GraphicPie data={dataGrapihc}/>
                         </div>
                     </div>
                   </Fragment>
