@@ -2,8 +2,10 @@ import React, {Fragment, useState, useEffect } from "react";
 
 import Pregunta from "./Pregunta";
 import Form from "./Form";
-import ListadoGastos from './ListadoGastos'
-import ControlPresupuesto from './ControlPresupuesto'
+import ListadoGastos from './ListadoGastos';
+import ControlPresupuesto from './ControlPresupuesto';
+import GraphicPie from './graphs/GraphicPie';
+import { gastoToGrapic } from '../helper';
 
 import arrow from '../assets/svg/arrow_back.svg'
 
@@ -13,7 +15,8 @@ const GenericHome = (props) => {
   const [mostrarPregunta, actualizarPregunta] = useState(true);
   const [gastos, setGastos] = useState([]);
   const [gasto, setGasto] = useState({});
-  const [crearGasto, setCrearGasto] = useState(false)
+  const [dataGrapihc, setDataGrapihc] = useState([]);
+  const [crearGasto, setCrearGasto] = useState(false);
 
     useEffect(() => {
         if(crearGasto){
@@ -21,6 +24,11 @@ const GenericHome = (props) => {
             setGastos([
                 ...gastos,
                 gasto
+            ])
+            // Agregamos el conjunto de datos para el grafico
+            setDataGrapihc([
+              ...dataGrapihc,
+              gastoToGrapic(gasto)
             ])
             // resta del presupuesto actual
             const presupuestoRestante = restante - gasto.cantidad
@@ -51,7 +59,8 @@ const GenericHome = (props) => {
                     guardarCantidad={guardarCantidad}
                     guardarRestante={guardarRestante}
                     actualizarPregunta={actualizarPregunta}
-                  />)
+                  />
+                  )
             : 
                 (
                   <Fragment>
@@ -72,6 +81,9 @@ const GenericHome = (props) => {
                                 cantidad={cantidad}
                                 restante={restante}
                             />
+                        </div>
+                        <div className="u-full-width column" style={{height:"32em"}}>
+                            <GraphicPie data={dataGrapihc} className="algo"/>
                         </div>
                     </div>
                   </Fragment>
