@@ -1,9 +1,5 @@
 import React from "react";
-<<<<<<< HEAD
 import { ResponsivePieCanvas } from "@nivo/pie";
-=======
-import { ResponsivePieCanvas  } from "@nivo/pie";
->>>>>>> e1e0a1469bd64db18a763c4211ea3bf2ac5161e6
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
 // no chart will be rendered.

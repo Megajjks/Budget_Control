@@ -38,6 +38,18 @@ const GenericHome = (props) => {
         setCrearGasto(false)
     }, [gasto, crearGasto, gastos, restante])
 
+
+    //Eliminar un gasto
+    const eliminarGasto = (id) =>{
+      const getGasto = gastos.filter(gasto => gasto.id===id)
+      const agregarMonto = restante + getGasto[0].cantidad
+      const newGastos = gastos.filter(gasto => gasto.id!==id)
+      const newDataGraphics =dataGrapihc.filter(g => g.id !== getGasto[0].nombre)
+      guardarRestante(agregarMonto)
+      setGastos(newGastos)
+      setDataGrapihc(newDataGraphics)
+    } 
+
     // regresar a la pregunta
     const goBack = () =>{
       // reinicio valores a default
@@ -76,6 +88,7 @@ const GenericHome = (props) => {
                         <div className="one-half column">
                             <ListadoGastos
                                 gastos={gastos}
+                                eliminarGasto={eliminarGasto}
                             /> 
                             <ControlPresupuesto
                                 cantidad={cantidad}
